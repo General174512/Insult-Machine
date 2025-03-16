@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insult & Compliment Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+        }
+        #insultButton { background-color: crimson; }
+        #complimentButton { background-color: forestgreen; }
+        #messages {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column-reverse; /* Newest at the top */
+            align-items: center;
+        }
+        .message {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        .insult { background-color: lightcoral; color: white; }
+        .compliment { background-color: lightgreen; color: black; }
+    </style>
+</head>
+<body>
+
+    <h1>Insult & Compliment Generator</h1>
+    <button id="insultButton">Insult Me</button>
+    <button id="complimentButton">Compliment Me</button>
+
+    <div id="messages"></div>
+
+    <script>
+        const insults = [
+            "You have something on your chin... no, the third one down.",
+            "You're like a cloud. When you disappear, it's a beautiful day.",
+            "I'd agree with you, but then we’d both be wrong.",
+            "Your secrets are safe with me. I never even listen when you tell me them.",
+            "You bring everyone so much joy... when you leave the room."
+        ];
+
+        const compliments = [
+            "You're like a ray of sunshine on a cloudy day!",
+            "You have a heart of gold and a smile to match.",
+            "You make the world a better place just by being in it.",
+            "Your kindness is contagious, and I hope I catch it!",
+            "You're more fun than a barrel of puppies!"
+        ];
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        function addMessage(text, type) {
+            const messageContainer = document.getElementById("messages");
+            const message = document.createElement("div");
+            message.classList.add("message", type);
+            message.textContent = text;
+            messageContainer.appendChild(message);
+        }
+
+        document.getElementById("insultButton").addEventListener("click", function() {
+            addMessage(getRandomItem(insults), "insult");
+        });
+
+        document.getElementById("complimentButton").addEventListener("click", function() {
+            addMessage(getRandomItem(compliments), "compliment");
+        });
+
+    </script>
+
+</body>
+</html>
