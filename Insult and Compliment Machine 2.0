@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insult & Compliment Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            text-align: center;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 2rem;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            margin: 10px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+        }
+        #insultButton { 
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+        }
+        #complimentButton { 
+            background: linear-gradient(45deg, #00b09b, #96c93d);
+        }
+        #messages {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 0.8rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .message {
+            padding: 1rem 1.5rem;
+            margin: 5px;
+            border-radius: 15px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease-out;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .insult { 
+            background: linear-gradient(45deg, #ff7f7f, #ff9999);
+            color: white;
+        }
+        .compliment { 
+            background: linear-gradient(45deg, #a8e6cf, #dcedc1);
+            color: #2c3e50;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Insult & Compliment Generator</h1>
+    <button id="insultButton">Insult Me</button>
+    <button id="complimentButton">Compliment Me</button>
+
+    <div id="messages"></div>
+
+    <script>
+        const insults = [
+            "You have something on your chin... no, the third one down.",
+            "You're like a cloud. When you disappear, it's a beautiful day.",
+            "I'd agree with you, but then we'd both be wrong.",
+            "Your secrets are safe with me. I never even listen when you tell them.",
+            "You bring everyone so much joy... when you leave the room.",
+            "I bet you sleep with a nightlight because the dark is afraid of you.",
+            "You're not the dumbest person alive, but you better hope they don't die.",
+            "I'd explain it to you, but I ran out of crayons.",
+            "If you were a spice, you'd be flour.",
+            "You're about as useful as a screen door on a submarine.",
+            "Your family tree must be a cactus because everybody on it is a prick.",
+            "You're the reason why shampoo has instructions.",
+            "I'm not saying I hate you, but I would unplug your life support to charge my phone.",
+            "You must have been born on a highway because that's where most accidents happen.",
+            "If I wanted to kill myself, I'd climb your ego and jump to your IQ."
+        ];
+
+        const compliments = [
+            "You're like a ray of sunshine on a cloudy day!",
+            "You have a heart of gold and a smile to match.",
+            "You make the world a better place just by being in it.",
+            "Your kindness is contagious, and I hope I catch it!",
+            "You're more fun than a barrel of puppies!",
+            "You could make a grumpy cat purr.",
+            "Your presence is like pizza - it makes everything better!",
+            "You're the human equivalent of a warm chocolate chip cookie.",
+            "If you were a book, you'd be a bestseller.",
+            "High-fiving you would be worth breaking my arm for.",
+            "You're the reason Santa has a nice list.",
+            "If you were a vegetable, you'd be a sweet-ato.",
+            "Your IQ is higher than your credit score.",
+            "You're like a perfectly toasted marshmallow - sweet and warm.",
+            "Chuck Norris would ask YOU for advice."
+        ];
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        const MAX_MESSAGES = 10;
+        const MESSAGE_TIMEOUT = 5000; // 5 seconds
+
+        function removeMessage(message) {
+            message.style.opacity = '0';
+            message.style.transform = 'translateY(20px)';
+            setTimeout(() => message.remove(), 300);
+        }
+
+        function addMessage(text, type) {
+            const messageContainer = document.getElementById("messages");
+            const message = document.createElement("div");
+            message.classList.add("message", type);
+            message.textContent = text;
+            messageContainer.appendChild(message);
+
+            // Remove message after timeout
+            setTimeout(() => removeMessage(message), MESSAGE_TIMEOUT);
+
+            // Check if we need to remove older messages
+            const messages = messageContainer.getElementsByClassName('message');
+            if (messages.length > MAX_MESSAGES) {
+                removeMessage(messages[messages.length - 1]);
+            }
+        }
+
+        document.getElementById("insultButton").addEventListener("click", function() {
+            addMessage(getRandomItem(insults), "insult");
+        });
+
+        document.getElementById("complimentButton").addEventListener("click", function() {
+            addMessage(getRandomItem(compliments), "compliment");
+        });
+
+    </script>
+
+</body>
+</html>
